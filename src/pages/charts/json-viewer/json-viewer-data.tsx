@@ -1,77 +1,94 @@
-import React from 'react'
+import React, { useState } from 'react'
 import {
-  createStyles,
-  makeStyles,
-  Slide,
-  Theme,
-  Dialog,
-  AppBar,
-  Toolbar,
-  IconButton,
+  Accordion,
+  AccordionActions,
+  AccordionDetails,
+  AccordionSummary,
   Button,
+  makeStyles,
+  TextField,
+  Typography,
 } from '@material-ui/core'
-import { TransitionProps } from '@material-ui/core/transitions'
-import Typography from '@material-ui/core/Typography'
-import { Close } from '@material-ui/icons'
+import { Close, Edit } from '@material-ui/icons'
 
 interface IJSONViewerDataProps {
   dataOpen: boolean
-  handleDataOpenClick: () => void
-  handleDataCloseClick: () => void
+  onAccordionChange: () => void
+  onSave: (data: unknown) => void
 }
 
-const useStyles = makeStyles((theme: Theme) =>
-  createStyles({
-    appBar: {
-      position: 'relative',
+const useStyles = makeStyles({
+  root: {
+    '&::before': {
+      top: 0,
+      position: 'inherit',
     },
-    title: {
-      marginLeft: theme.spacing(2),
-      flex: 1,
-    },
-  }),
-)
 
-const Transition = React.forwardRef(function Transition(
-  props: TransitionProps & { children?: React.ReactElement },
-  ref: React.Ref<unknown>,
-) {
-  return <Slide direction="up" ref={ref} {...props} />
+    '&.Mui-expanded': {
+      margin: 0,
+    },
+  },
+  textField: {
+    width: '100%',
+  },
 })
 
 const JSONViewerData: React.FC<IJSONViewerDataProps> = props => {
   const classes = useStyles()
 
+  const [error, setError] = useState<string>('')
+  const [data, setData] = useState<string>('')
+
+  const sanitizeData = () => {
+    try {
+      const sanitizedData = JSON.parse(data, null)
+      props.onSave(sanitizedData)
+      props.onAccordionChange()
+    } catch (err) {
+      setError(`${err}`)
+      console.log(err, data)
+    }
+  }
+
   return (
-    <Dialog
-      fullScreen
-      open={props.dataOpen}
-      TransitionComponent={Transition}
-      onClose={props.handleDataCloseClick}
+    <Accordion
+      className={classes.root}
+      expanded={props.dataOpen}
+      onChange={props.onAccordionChange}
     >
-      <AppBar className={classes.appBar}>
-        <Toolbar>
-          <IconButton
-            onClick={props.handleDataCloseClick}
-            edge="start"
-            color="inherit"
-            aria-label="close"
-          >
-            <Close />
-          </IconButton>
-          <Typography variant="h6" className={classes.title}>
-            JSON Viewer Data
-          </Typography>
-          <Button
-            autoFocus
-            color="inherit"
-            onClick={props.handleDataCloseClick}
-          >
-            Save
-          </Button>
-        </Toolbar>
-      </AppBar>
-    </Dialog>
+      <AccordionSummary
+        expandIcon={props.dataOpen ? <Close /> : <Edit />}
+        aria-controls="set-data-content"
+        id="set-data-header"
+      >
+        <Typography>Data</Typography>
+      </AccordionSummary>
+      <AccordionDetails>
+        <TextField
+          className={classes.textField}
+          value={data}
+          multiline={true}
+          rows={8}
+          variant={'outlined'}
+          error={!!error}
+          helperText={error}
+          onChange={ev => setData(ev.currentTarget.value)}
+          placeholder={JSON.stringify(
+            {
+              fruits: [{ name: 'apple', color: 'red' }],
+            },
+            null,
+            2,
+          )}
+        />
+      </AccordionDetails>
+
+      <AccordionActions>
+        <Button color={'primary'} variant={'contained'} onClick={sanitizeData}>
+          Save
+        </Button>
+      </AccordionActions>
+    </Accordion>
   )
 }
 

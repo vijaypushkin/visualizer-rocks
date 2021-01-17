@@ -1,8 +1,14 @@
-import React from 'react'
+import React, { useState } from 'react'
+import {
+  Button,
+  createStyles,
+  makeStyles,
+  Theme,
+  Typography,
+} from '@material-ui/core'
 import JSONViewerData from './json-viewer-data'
-import { createStyles, makeStyles, Typography, Button } from '@material-ui/core'
 
-const useStyles = makeStyles(
+const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     root: {
       display: 'flex',
@@ -12,19 +18,25 @@ const useStyles = makeStyles(
       display: 'flex',
       flexDirection: 'row',
       justifyContent: 'space-between',
+      marginBottom: theme.spacing(2),
+    },
+    textField: {
+      width: '100%',
     },
   }),
 )
 
 export default () => {
   const classes = useStyles()
-  const [dataOpen, setDataOpen] = React.useState(false)
+  const [dataOpen, setDataOpen] = useState<boolean>(false)
+  const [data, setData] = useState<any>(null)
 
-  const handleDataOpenClick = () => {
-    setDataOpen(true)
+  const handleAccordionChange = () => {
+    setDataOpen(prev => !prev)
   }
-  const handleDataCloseClick = () => {
-    setDataOpen(false)
+
+  const handleDataSave = (data: unknown) => {
+    setData(data)
   }
 
   return (
@@ -33,11 +45,7 @@ export default () => {
         <div className={classes.header}>
           <Typography variant={'h5'}>JSON Viewer</Typography>
 
-          <Button
-            color={'primary'}
-            variant={'contained'}
-            onClick={handleDataOpenClick}
-          >
+          <Button color={'primary'} variant={'contained'}>
             Data
           </Button>
         </div>
@@ -45,9 +53,11 @@ export default () => {
 
       <JSONViewerData
         dataOpen={dataOpen}
-        handleDataOpenClick={handleDataOpenClick}
-        handleDataCloseClick={handleDataCloseClick}
+        onAccordionChange={handleAccordionChange}
+        onSave={handleDataSave}
       />
+
+      <p>{JSON.stringify(data)}</p>
     </>
   )
 }
