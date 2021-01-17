@@ -1,0 +1,6 @@
+# Ignore Firebase
+.firebase/
+artifacts/
+dist/
+node_modules/
+tmp/
