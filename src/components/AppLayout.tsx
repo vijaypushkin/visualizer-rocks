@@ -72,6 +72,9 @@ const AppLayout: React.FC = props => {
           <ListItem button={true} onClick={() => navigate('/app')}>
             <ListItemText primary={'App'} />
           </ListItem>
+          <ListItem button={true} onClick={() => navigate('/charts')}>
+            <ListItemText primary={'Charts'} />
+          </ListItem>
           <ListItem button={true} onClick={() => navigate('/about')}>
             <ListItemText primary={'About'} />
           </ListItem>
