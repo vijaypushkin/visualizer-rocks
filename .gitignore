@@ -1,0 +1,18 @@
+# React Static
+node_modules
+tmp
+dist
+artifacts
+keys
+
+# IDE
+.idea
+
+# firebase
+.firebase/
+
+# logs
+ui-debug.log
+firebase-debug.log
+firestore-debug.log
+database-debug.log
