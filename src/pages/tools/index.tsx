@@ -34,7 +34,7 @@ export default () => {
       <Card className={classes.card}>
         <CardActionArea
           className={classes.content}
-          onClick={() => navigate('/charts/json-viewer')}
+          onClick={() => navigate('/tools/json-viewer')}
         >
           <CardContent>
             <Typography>JSON Viewer</Typography>

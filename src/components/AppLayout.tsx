@@ -42,6 +42,7 @@ const useStyles = makeStyles((theme: Theme) =>
     content: {
       gridArea: 'content',
       padding: theme.spacing(3),
+      width: `calc(100vw - ${drawerWidth}px)`,
     },
   }),
 )
@@ -72,8 +73,8 @@ const AppLayout: React.FC = props => {
           <ListItem button={true} onClick={() => navigate('/app')}>
             <ListItemText primary={'App'} />
           </ListItem>
-          <ListItem button={true} onClick={() => navigate('/charts')}>
-            <ListItemText primary={'Charts'} />
+          <ListItem button={true} onClick={() => navigate('/tools')}>
+            <ListItemText primary={'Tools'} />
           </ListItem>
           <ListItem button={true} onClick={() => navigate('/about')}>
             <ListItemText primary={'About'} />

@@ -44,6 +44,7 @@ const JSONViewerData: React.FC<IJSONViewerDataProps> = props => {
       const sanitizedData = JSON.parse(data, null)
       props.onSave(sanitizedData)
       props.onAccordionChange()
+      setError('')
     } catch (err) {
       setError(`${err}`)
       console.log(err, data)
