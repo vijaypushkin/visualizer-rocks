@@ -9,7 +9,7 @@ import {
 } from '@material-ui/core'
 import { TreeItem, TreeView } from '@material-ui/lab'
 import { ChevronRight, ExpandMore } from '@material-ui/icons'
-import CustomTextIcon from '@components/icons/object'
+import CustomTextIcon from '@components/icons/custom-text-icon'
 import { blue, green, grey, red } from '@material-ui/core/colors'
 
 type TRenderNode<D = unknown> = (
