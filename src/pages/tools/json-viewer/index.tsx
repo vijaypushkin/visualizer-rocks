@@ -1,11 +1,5 @@
 import React, { useState } from 'react'
-import {
-  Button,
-  createStyles,
-  makeStyles,
-  Theme,
-  Typography,
-} from '@material-ui/core'
+import { createStyles, makeStyles, Theme, Typography } from '@material-ui/core'
 import JSONViewerData from './json-viewer-data'
 import JSONViewerComp from './json-viewer-comp'
 import HtmlHead from '@components/HtmlHead'
@@ -58,10 +52,6 @@ export default () => {
       <div className={classes.root}>
         <div className={classes.header}>
           <Typography variant={'h5'}>JSON Viewer</Typography>
-
-          <Button color={'primary'} variant={'contained'}>
-            Data
-          </Button>
         </div>
 
         <JSONViewerData
