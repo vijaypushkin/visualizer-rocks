@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import {
   AppBar,
   makeStyles,
@@ -9,29 +9,37 @@ import {
   ListItemText,
   Theme,
   createStyles,
+  ListItemIcon,
+  Hidden,
+  IconButton,
 } from '@material-ui/core'
-import { navigate } from '@reach/router'
+import { Link } from '@reach/router'
+import { Apps, Book, Home, Info, PieChart, Menu } from '@material-ui/icons'
 
 const drawerWidth = 240
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     root: {
-      display: 'grid',
-      gridTemplateColumns: `${drawerWidth}px auto`,
-      gridTemplateRows: `${theme.spacing(8)}px auto`,
-      gridTemplateAreas: `
-        "appBar appBar"
-        "sideBar content"
-      `,
+      display: 'flex',
+      flexDirection: 'column',
+    },
+    body: {
+      display: 'flex',
     },
     appBar: {
-      gridArea: 'appBar',
       zIndex: theme.zIndex.drawer + 1,
     },
+    menuButton: {
+      marginRight: theme.spacing(2),
+      [theme.breakpoints.up('sm')]: {
+        display: 'none',
+      },
+    },
     drawer: {
-      gridArea: 'sideBar',
-      width: drawerWidth,
+      [theme.breakpoints.up('sm')]: {
+        width: drawerWidth,
+      },
     },
     drawerPaper: {
       width: drawerWidth,
@@ -40,48 +48,122 @@ const useStyles = makeStyles((theme: Theme) =>
       overflow: 'auto',
     },
     content: {
-      gridArea: 'content',
       padding: theme.spacing(3),
       width: `calc(100vw - ${drawerWidth}px)`,
     },
   }),
 )
 
+const MENU_ITEMS = [
+  {
+    name: 'Home',
+    path: '/',
+    Icon: Home,
+  },
+  {
+    name: 'Blog',
+    path: '/blog',
+    Icon: Book,
+  },
+  {
+    name: 'App',
+    path: '/app',
+    Icon: Apps,
+  },
+  {
+    name: 'Tools',
+    path: '/tools',
+    Icon: PieChart,
+  },
+  {
+    name: 'About',
+    path: '/about',
+    Icon: Info,
+  },
+]
+
 const AppLayout: React.FC = props => {
   const classes = useStyles()
+  const [mobileDrawerOpen, toggleMobileDrawer] = useState(false)
+
+  const drawer = (
+    <>
+      <Toolbar>
+        {mobileDrawerOpen && (
+          <ListItem>
+            <ListItemText
+              primary={<Typography variant={'h6'}>Visualizer Rocks</Typography>}
+            />
+          </ListItem>
+        )}
+      </Toolbar>
+      <div className={classes.drawerContainer}>
+        {MENU_ITEMS.map(({ Icon, ...item }) => (
+          <Link key={item.path} to={item.path}>
+            <ListItem button={true}>
+              <ListItemIcon>
+                <Icon />
+              </ListItemIcon>
+              <ListItemText primary={item.name} />
+            </ListItem>
+          </Link>
+        ))}
+      </div>
+    </>
+  )
+
+  const container =
+    window !== undefined ? () => window.document.body : undefined
+
   return (
     <div className={classes.root}>
       <AppBar className={classes.appBar} position={'sticky'}>
         <Toolbar>
+          <IconButton
+            color={'inherit'}
+            aria-label={'open drawer'}
+            edge={'start'}
+            onClick={() => toggleMobileDrawer(true)}
+            className={classes.menuButton}
+          >
+            <Menu />
+          </IconButton>
           <Typography variant={'h6'}>Visualizer Rocks</Typography>
         </Toolbar>
       </AppBar>
-      <Drawer
-        className={classes.drawer}
-        variant={'permanent'}
-        open={true}
-        classes={{ paper: classes.drawerPaper }}
-      >
-        <Toolbar />
-        <div className={classes.drawerContainer}>
-          <ListItem button={true} onClick={() => navigate('/')}>
-            <ListItemText primary={'Home'} />
-          </ListItem>
-          <ListItem button={true} onClick={() => navigate('/blog')}>
-            <ListItemText primary={'Blog'} />
-          </ListItem>
-          <ListItem button={true} onClick={() => navigate('/app')}>
-            <ListItemText primary={'App'} />
-          </ListItem>
-          <ListItem button={true} onClick={() => navigate('/tools')}>
-            <ListItemText primary={'Tools'} />
-          </ListItem>
-          <ListItem button={true} onClick={() => navigate('/about')}>
-            <ListItemText primary={'About'} />
-          </ListItem>
-        </div>
-      </Drawer>
-      <main className={classes.content}>{props.children}</main>
+
+      <div className={classes.body}>
+        <nav className={classes.drawer}>
+          <Hidden smUp={true} implementation={'css'}>
+            <Drawer
+              variant={'temporary'}
+              open={mobileDrawerOpen}
+              container={container}
+              onClose={() => toggleMobileDrawer(false)}
+              classes={{
+                paper: classes.drawerPaper,
+              }}
+              ModalProps={{
+                keepMounted: true, // Better open performance on mobile.
+              }}
+            >
+              {drawer}
+            </Drawer>
+          </Hidden>
+
+          <Hidden xsDown={true} implementation={'css'}>
+            <Drawer
+              variant={'permanent'}
+              open={true}
+              classes={{ paper: classes.drawerPaper }}
+            >
+              {drawer}
+            </Drawer>
+          </Hidden>
+        </nav>
+
+        <main className={classes.content}>{props.children}</main>
+      </div>
     </div>
   )
 }

@@ -2,6 +2,9 @@ import React from 'react'
 
 export default () => (
   <div>
-    <p>React Static is a progressive static site generator for React.</p>
+    <p>
+      Visualizer. Rocks is a modern tool for visualizing your ideas and data in
+      no time.
+    </p>
   </div>
 )
