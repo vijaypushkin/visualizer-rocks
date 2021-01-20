@@ -50,6 +50,9 @@ const useStyles = makeStyles((theme: Theme) =>
     content: {
       padding: theme.spacing(3),
       width: `calc(100vw - ${drawerWidth}px)`,
+      [theme.breakpoints.down('sm')]: {
+        width: `100vw`,
+      },
     },
   }),
 )
@@ -113,7 +116,7 @@ const AppLayout: React.FC = props => {
   )
 
   const container =
-    window !== undefined ? () => window.document.body : undefined
+    typeof window !== 'undefined' ? () => window.document.body : undefined
 
   return (
     <div className={classes.root}>
