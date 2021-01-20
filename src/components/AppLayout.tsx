@@ -14,7 +14,15 @@ import {
   IconButton,
 } from '@material-ui/core'
 import { Link } from '@reach/router'
-import { Apps, Book, Home, Info, PieChart, Menu } from '@material-ui/icons'
+import {
+  Apps,
+  Book,
+  Home,
+  Info,
+  PieChart,
+  Menu,
+  DataUsage,
+} from '@material-ui/icons'
 
 const drawerWidth = 240
 
@@ -72,6 +80,11 @@ const MENU_ITEMS = [
     name: 'App',
     path: '/app',
     Icon: Apps,
+  },
+  {
+    name: 'Data',
+    path: '/data',
+    Icon: DataUsage,
   },
   {
     name: 'Tools',
