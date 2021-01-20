@@ -106,7 +106,9 @@ const useStyles = makeStyles((theme: Theme) =>
   }),
 )
 
-const JSONViewerComp: React.FC<{ data: unknown }> = ({ data }) => {
+const JSONViewerComp: React.FC<{
+  data: unknown
+}> = ({ data }) => {
   const classes = useStyles()
   const [edit, toggleEdit] = useState(false)
   const [editData, setEditData] = useState<any>('')
@@ -131,9 +133,9 @@ const JSONViewerComp: React.FC<{ data: unknown }> = ({ data }) => {
   }, [editData, editPath])
 
   const handleSaveClick = useCallback(() => {
-    console.log(editData, editPath)
+    // TODO Add Edit
     handleCancelClick()
-  }, [editData, editPath])
+  }, [editData, editPath, data])
 
   if (data === null) {
     return (
