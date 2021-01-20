@@ -9,11 +9,11 @@ import {
 } from '@material-ui/core'
 import { navigate } from '@reach/router'
 
-const useStyles = makeStyles(() =>
+const useStyles = makeStyles(theme =>
   createStyles({
     root: {
       display: 'flex',
-      width: 300,
+      margin: theme.spacing(1),
     },
     card: {
       width: 345,

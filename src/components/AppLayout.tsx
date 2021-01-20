@@ -23,6 +23,7 @@ import {
   Menu,
   DataUsage,
 } from '@material-ui/icons'
+import { useLocation } from '@reach/router'
 
 const drawerWidth = 240
 
@@ -40,8 +41,9 @@ const useStyles = makeStyles((theme: Theme) =>
     },
     menuButton: {
       marginRight: theme.spacing(2),
-      [theme.breakpoints.up('sm')]: {
-        display: 'none',
+      display: 'none',
+      [theme.breakpoints.down('sm')]: {
+        display: 'block',
       },
     },
     drawer: {
@@ -56,7 +58,6 @@ const useStyles = makeStyles((theme: Theme) =>
       overflow: 'auto',
     },
     content: {
-      padding: theme.spacing(3),
       width: `calc(100vw - ${drawerWidth}px)`,
       [theme.breakpoints.down('sm')]: {
         width: `100vw`,
@@ -100,6 +101,7 @@ const MENU_ITEMS = [
 
 const AppLayout: React.FC = props => {
   const classes = useStyles()
+  const location = useLocation()
   const [mobileDrawerOpen, toggleMobileDrawer] = useState(false)
 
   const drawer = (
@@ -116,7 +118,7 @@ const AppLayout: React.FC = props => {
       <div className={classes.drawerContainer}>
         {MENU_ITEMS.map(({ Icon, ...item }) => (
           <Link key={item.path} to={item.path}>
-            <ListItem button={true}>
+            <ListItem button={true} selected={location.pathname === item.path}>
               <ListItemIcon>
                 <Icon />
               </ListItemIcon>
@@ -167,7 +169,7 @@ const AppLayout: React.FC = props => {
             </Drawer>
           </Hidden>
 
-          <Hidden xsDown={true} implementation={'css'}>
+          <Hidden smDown={true} implementation={'css'}>
             <Drawer
               variant={'permanent'}
               open={true}
