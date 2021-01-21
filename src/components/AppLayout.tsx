@@ -10,8 +10,9 @@ import {
   Theme,
   createStyles,
   ListItemIcon,
-  Hidden,
   IconButton,
+  useMediaQuery,
+  useTheme,
 } from '@material-ui/core'
 import { Link } from '@reach/router'
 import {
@@ -22,6 +23,7 @@ import {
   PieChart,
   Menu,
   DataUsage,
+  CompareArrows,
 } from '@material-ui/icons'
 import { useLocation } from '@reach/router'
 
@@ -41,15 +43,9 @@ const useStyles = makeStyles((theme: Theme) =>
     },
     menuButton: {
       marginRight: theme.spacing(2),
-      display: 'none',
-      [theme.breakpoints.down('sm')]: {
-        display: 'block',
-      },
     },
     drawer: {
-      [theme.breakpoints.up('sm')]: {
-        width: drawerWidth,
-      },
+      width: drawerWidth,
     },
     drawerPaper: {
       width: drawerWidth,
@@ -62,6 +58,10 @@ const useStyles = makeStyles((theme: Theme) =>
       [theme.breakpoints.down('sm')]: {
         width: `100vw`,
       },
+    },
+
+    fullContent: {
+      width: `100vw`,
     },
   }),
 )
@@ -90,6 +90,11 @@ const MENU_ITEMS = [
   {
     name: 'Tools',
     path: '/tools',
+    Icon: CompareArrows,
+  },
+  {
+    name: 'Charts',
+    path: '/charts',
     Icon: PieChart,
   },
   {
@@ -102,7 +107,12 @@ const MENU_ITEMS = [
 const AppLayout: React.FC = props => {
   const classes = useStyles()
   const location = useLocation()
+
+  const theme = useTheme()
+  const isSmViewpoint = useMediaQuery<Theme>(theme.breakpoints.down('sm'))
+
   const [mobileDrawerOpen, toggleMobileDrawer] = useState(false)
+  const [desktopDrawerOpen, toggleDesktopDrawer] = useState(true)
 
   const drawer = (
     <>
@@ -141,7 +151,11 @@ const AppLayout: React.FC = props => {
             color={'inherit'}
             aria-label={'open drawer'}
             edge={'start'}
-            onClick={() => toggleMobileDrawer(true)}
+            onClick={() =>
+              isSmViewpoint
+                ? toggleMobileDrawer(true)
+                : toggleDesktopDrawer(!desktopDrawerOpen)
+            }
             className={classes.menuButton}
           >
             <Menu />
@@ -151,8 +165,8 @@ const AppLayout: React.FC = props => {
       </AppBar>
 
       <div className={classes.body}>
-        <nav className={classes.drawer}>
-          <Hidden smUp={true} implementation={'css'}>
+        {isSmViewpoint ? (
+          <nav>
             <Drawer
               variant={'temporary'}
               open={mobileDrawerOpen}
@@ -167,20 +181,28 @@ const AppLayout: React.FC = props => {
             >
               {drawer}
             </Drawer>
-          </Hidden>
-
-          <Hidden smDown={true} implementation={'css'}>
+          </nav>
+        ) : (
+          <nav className={desktopDrawerOpen && classes.drawer}>
             <Drawer
-              variant={'permanent'}
-              open={true}
+              variant={'persistent'}
+              open={desktopDrawerOpen}
               classes={{ paper: classes.drawerPaper }}
             >
               {drawer}
             </Drawer>
-          </Hidden>
-        </nav>
+          </nav>
+        )}
 
-        <main className={classes.content}>{props.children}</main>
+        <main
+          className={
+            isSmViewpoint || !desktopDrawerOpen
+              ? classes.fullContent
+              : classes.content
+          }
+        >
+          {props.children}
+        </main>
       </div>
     </div>
   )

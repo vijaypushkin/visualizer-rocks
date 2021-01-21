@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useState } from 'react'
 import { createStyles, makeStyles, Paper } from '@material-ui/core'
 import Spreadsheet, { createEmptyMatrix } from 'react-spreadsheet'
 
@@ -21,10 +21,6 @@ const initialData = createEmptyMatrix(50, 50)
 export default () => {
   const classes = useStyles(initialData)
   const [data, setData] = useState(initialData)
-
-  useEffect(() => {
-    console.log(data)
-  }, [data])
 
   return (
     <Paper className={classes.root}>
