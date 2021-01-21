@@ -20,9 +20,9 @@ export default () => (
       <Button
         variant={'contained'}
         color={'primary'}
-        onClick={() => navigate('/tools/json-viewer')}
+        onClick={() => navigate('/charts/')}
       >
-        JSON Viewer
+        Explore
       </Button>
     </div>
 

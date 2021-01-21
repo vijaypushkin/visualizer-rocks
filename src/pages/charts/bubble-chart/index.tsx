@@ -1,7 +1,7 @@
 import React from 'react'
 import { Paper, Typography } from '@material-ui/core'
 import { ResponsiveBubble } from '@nivo/circle-packing'
-import useChartPageStyles from '../useChartPageStyles'
+import useChartPageStyles from '@hooks/styles/useChartPageStyles'
 
 export default () => {
   const classes = useChartPageStyles()

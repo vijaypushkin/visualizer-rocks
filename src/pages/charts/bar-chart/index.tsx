@@ -1,7 +1,7 @@
 import React from 'react'
 import { ResponsiveBar } from '@nivo/bar'
 import { Paper, Typography } from '@material-ui/core'
-import useChartPageStyles from '../useChartPageStyles'
+import useChartPageStyles from '@hooks/styles/useChartPageStyles'
 
 export default () => {
   const classes = useChartPageStyles()
