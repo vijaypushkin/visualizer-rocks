@@ -1,56 +1,48 @@
 import React from 'react'
-import { Paper, Typography } from '@material-ui/core'
 import { ResponsiveBump } from '@nivo/bump'
-import useChartPageStyles from '@hooks/styles/useChartPageStyles'
+import ChartsLayout from '@components/layouts/ChartsLayout'
 
 export default () => {
-  const classes = useChartPageStyles()
   return (
-    <div className={classes.root}>
-      <div>
-        <Typography variant={'h5'}>Line Chart</Typography>
-      </div>
-
-      <Paper className={classes.content} elevation={6}>
-        <ResponsiveBump
-          data={data}
-          margin={{ top: 40, right: 100, bottom: 40, left: 60 }}
-          colors={{ scheme: 'spectral' }}
-          pointSize={10}
-          activePointSize={16}
-          inactivePointSize={0}
-          pointColor={{ theme: 'background' }}
-          pointBorderWidth={3}
-          activePointBorderWidth={3}
-          pointBorderColor={{ from: 'serie.color' }}
-          axisTop={{
-            tickSize: 5,
-            tickPadding: 5,
-            tickRotation: 0,
-            legend: '',
-            legendPosition: 'middle',
-            legendOffset: -36,
-          }}
-          axisRight={null}
-          axisBottom={{
-            tickSize: 5,
-            tickPadding: 5,
-            tickRotation: 0,
-            legend: '',
-            legendPosition: 'middle',
-            legendOffset: 32,
-          }}
-          axisLeft={{
-            tickSize: 5,
-            tickPadding: 5,
-            tickRotation: 0,
-            legend: 'ranking',
-            legendPosition: 'middle',
-            legendOffset: -40,
-          }}
-        />
-      </Paper>
-    </div>
+    <ChartsLayout title={'Line Chart'}>
+      <ResponsiveBump
+        data={data}
+        margin={{ top: 40, right: 100, bottom: 40, left: 60 }}
+        colors={{ scheme: 'spectral' }}
+        pointSize={10}
+        activePointSize={16}
+        inactivePointSize={0}
+        pointColor={{ theme: 'background' }}
+        pointBorderWidth={3}
+        activePointBorderWidth={3}
+        pointBorderColor={{ from: 'serie.color' }}
+        axisTop={{
+          tickSize: 5,
+          tickPadding: 5,
+          tickRotation: 0,
+          legend: '',
+          legendPosition: 'middle',
+          legendOffset: -36,
+        }}
+        axisRight={null}
+        axisBottom={{
+          tickSize: 5,
+          tickPadding: 5,
+          tickRotation: 0,
+          legend: '',
+          legendPosition: 'middle',
+          legendOffset: 32,
+        }}
+        axisLeft={{
+          tickSize: 5,
+          tickPadding: 5,
+          tickRotation: 0,
+          legend: 'ranking',
+          legendPosition: 'middle',
+          legendOffset: -40,
+        }}
+      />
+    </ChartsLayout>
   )
 }
 

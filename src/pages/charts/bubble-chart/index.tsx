@@ -1,45 +1,37 @@
 import React from 'react'
-import { Paper, Typography } from '@material-ui/core'
 import { ResponsiveBubble } from '@nivo/circle-packing'
-import useChartPageStyles from '@hooks/styles/useChartPageStyles'
+import ChartsLayout from '@components/layouts/ChartsLayout'
 
 export default () => {
-  const classes = useChartPageStyles()
   return (
-    <div className={classes.root}>
-      <div>
-        <Typography variant={'h5'}>Line Chart</Typography>
-      </div>
-
-      <Paper className={classes.content} elevation={6}>
-        <ResponsiveBubble
-          root={data}
-          margin={{ top: 20, right: 20, bottom: 20, left: 20 }}
-          identity="name"
-          value="loc"
-          colors={{ scheme: 'nivo' }}
-          padding={6}
-          labelTextColor={{ from: 'color', modifiers: [['darker', 0.8]] }}
-          borderWidth={2}
-          borderColor={{ from: 'color' }}
-          defs={[
-            {
-              id: 'lines',
-              type: 'patternLines',
-              background: 'none',
-              color: 'inherit',
-              rotation: -45,
-              lineWidth: 5,
-              spacing: 8,
-            },
-          ]}
-          fill={[{ match: { depth: 1 }, id: 'lines' }]}
-          animate={true}
-          motionStiffness={90}
-          motionDamping={12}
-        />
-      </Paper>
-    </div>
+    <ChartsLayout title={'Line Chart'}>
+      <ResponsiveBubble
+        root={data}
+        margin={{ top: 20, right: 20, bottom: 20, left: 20 }}
+        identity="name"
+        value="loc"
+        colors={{ scheme: 'nivo' }}
+        padding={6}
+        labelTextColor={{ from: 'color', modifiers: [['darker', 0.8]] }}
+        borderWidth={2}
+        borderColor={{ from: 'color' }}
+        defs={[
+          {
+            id: 'lines',
+            type: 'patternLines',
+            background: 'none',
+            color: 'inherit',
+            rotation: -45,
+            lineWidth: 5,
+            spacing: 8,
+          },
+        ]}
+        fill={[{ match: { depth: 1 }, id: 'lines' }]}
+        animate={true}
+        motionStiffness={90}
+        motionDamping={12}
+      />
+    </ChartsLayout>
   )
 }
 

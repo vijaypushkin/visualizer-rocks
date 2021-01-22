@@ -4,7 +4,7 @@ import { Router } from '@reach/router'
 import Dynamic from '@containers/Dynamic'
 import './app.css'
 import { CssBaseline } from '@material-ui/core'
-import AppLayout from '@components/AppLayout'
+import AppLayout from '@components/layouts/AppLayout'
 
 // Any routes that start with 'app' will be treated as non-static routes
 addPrefetchExcludes(['app'])

@@ -1,36 +1,27 @@
 import React from 'react'
-import { Paper, Typography } from '@material-ui/core'
 import { ResponsiveChoropleth } from '@nivo/geo'
-import useChartPageStyles from '@hooks/styles/useChartPageStyles'
+import ChartsLayout from '@components/layouts/ChartsLayout'
 
 export default () => {
-  const classes = useChartPageStyles()
-
   return (
-    <div className={classes.root}>
-      <div>
-        <Typography variant={'h5'}>Line Chart</Typography>
-      </div>
-
-      <Paper className={classes.content} elevation={6}>
-        <ResponsiveChoropleth
-          data={data}
-          features={[]}
-          margin={{ top: 0, right: 0, bottom: 0, left: 0 }}
-          colors="nivo"
-          domain={[0, 1000000]}
-          unknownColor="#666666"
-          label="properties.name"
-          valueFormat=".2s"
-          projectionTranslation={[0.5, 0.5]}
-          projectionRotation={[0, 0, 0]}
-          enableGraticule={true}
-          graticuleLineColor="#dddddd"
-          borderWidth={0.5}
-          borderColor="#152538"
-        />
-      </Paper>
-    </div>
+    <ChartsLayout title={'Geo Map'}>
+      <ResponsiveChoropleth
+        data={data}
+        features={[]}
+        margin={{ top: 0, right: 0, bottom: 0, left: 0 }}
+        colors="nivo"
+        domain={[0, 1000000]}
+        unknownColor="#666666"
+        label="properties.name"
+        valueFormat=".2s"
+        projectionTranslation={[0.5, 0.5]}
+        projectionRotation={[0, 0, 0]}
+        enableGraticule={true}
+        graticuleLineColor="#dddddd"
+        borderWidth={0.5}
+        borderColor="#152538"
+      />
+    </ChartsLayout>
   )
 }
 

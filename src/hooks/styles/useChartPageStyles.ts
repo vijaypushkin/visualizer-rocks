@@ -9,7 +9,7 @@ const useChartPageStyles = makeStyles(theme =>
     },
     content: {
       margin: theme.spacing(1),
-      height: `calc(100vh - ${theme.spacing(14)}px)`,
+      height: `calc(100vh - ${theme.spacing(20)}px)`,
     },
   }),
 )
